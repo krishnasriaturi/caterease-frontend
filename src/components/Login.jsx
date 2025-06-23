@@ -1,39 +1,34 @@
 import React, { useState } from 'react';
-import OrganizerLogin from './Organizer';
-import GuestForm from './Guest';
+import OrganizerLoginForm from './OrganizerDashboard';
+import GuestLoginForm from './GuestLoginForm';
 
-const Login = () => {
-    const [isOrganizer, setIsOrganizer] = useState(true); // Default to Organizer form
+export default function Login() {
+    const [role, setRole] = useState('organizer'); // 'organizer' or 'guest'
 
     return (
-        <div className="p-8 max-w-lg mx-auto">
-            {/* Toggle Buttons */}
-            <div className="flex justify-center mb-6">
-                <button
-                    onClick={() => setIsOrganizer(true)}
-                    className={`px-4 py-2 rounded-l-lg ${isOrganizer ? 'bg-black text-white' : 'bg-gray-200 text-black'}`}
-                >
-                    Organizer
-                </button>
-                <button
-                    onClick={() => setIsOrganizer(false)}
-                    className={`px-4 py-2 rounded-r-lg ${!isOrganizer ? 'bg-black text-white' : 'bg-gray-200 text-black'}`}
-                >
-                    Guest
-                </button>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="max-w-lg w-full bg-white shadow-lg rounded-lg p-8">
+                <div className="flex justify-center mb-6">
+                    <button
+                        onClick={() => setRole('organizer')}
+                        className={`px-4 py-2 font-semibold rounded-l ${
+                            role === 'organizer' ? 'bg-blue-600 text-white' : 'bg-gray-200'
+                        }`}
+                    >
+                        Organizer Login
+                    </button>
+                    <button
+                        onClick={() => setRole('guest')}
+                        className={`px-4 py-2 font-semibold rounded-r ${
+                            role === 'guest' ? 'bg-blue-600 text-white' : 'bg-gray-200'
+                        }`}
+                    >
+                        Guest Login
+                    </button>
+                </div>
+
+                {role === 'organizer' ? <OrganizerLoginForm /> : <GuestLoginForm />}
             </div>
-
-            {/* Organizer Form */}
-            {isOrganizer && (
-                <OrganizerLogin />
-            )}
-
-            {/* Guest Form */}
-            {!isOrganizer && (
-                <GuestForm />
-            )}
         </div>
     );
-};
-
-export default Login;
+}
